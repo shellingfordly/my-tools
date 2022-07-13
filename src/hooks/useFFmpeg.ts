@@ -25,14 +25,10 @@ const getFFmpeg = () => {
   };
 };
 
-let ffmpeg: FFmpeg | null = null;
-
 export async function loadFFmpeg() {
-  if (ffmpeg == null) {
-    const { createFFmpeg } = getFFmpeg();
-    ffmpeg = createFFmpeg({ log: true });
-    await ffmpeg.load();
-  }
+  const { createFFmpeg } = getFFmpeg();
+  const ffmpeg = createFFmpeg({ log: true });
+  await ffmpeg.load();
   return ffmpeg;
 }
 
@@ -44,16 +40,6 @@ export async function useFFmpeg(
   const ffmpeg = await loadFFmpeg();
   const { fetchFile } = getFFmpeg();
 
-  ffmpeg.setLogger((logger) => {
-    // console.log("logger", logger);
-    /*
-     * type can be one of following:
-     *
-     * info: internal workflow debug messages
-     * fferr: ffmpeg native stderr output
-     * ffout: ffmpeg native stdout output
-     */
-  });
   ffmpeg.setProgress(progressFn);
 
   const {

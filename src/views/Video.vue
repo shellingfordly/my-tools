@@ -94,7 +94,11 @@ async function onChange() {
     <div ref="resRef">
       <div v-if="progress && progress < 100">loading {{ progress }}%</div>
       <template v-if="resultUrl">
-        <img v-if="videoConfig.fileType === 'gif'" :src="resultUrl" />
+        <img
+          v-if="videoConfig.fileType === 'gif'"
+          :src="resultUrl"
+          style="width: 300px; height: 200px"
+        />
         <video v-else :src="resultUrl" autoplay loop width="500" height="300" />
         <Button
           type="outline"
@@ -112,10 +116,6 @@ async function onChange() {
 .container {
   display: flex;
   padding: 20px;
-  // > div {
-  //   width: 50%;
-  // }
-
   .left {
     margin-right: 20px;
   }
