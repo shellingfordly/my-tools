@@ -5,7 +5,6 @@ import AutoImport from "unplugin-auto-import/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/my-tools",
   server: {
     port: 3080,
     headers: {

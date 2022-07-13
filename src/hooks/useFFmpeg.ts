@@ -1,10 +1,14 @@
-import {
-  createFFmpeg,
-  fetchFile,
+import type {
+  CreateFFmpegOptions,
   FFmpeg,
   ProgressCallback,
 } from "@ffmpeg/ffmpeg";
 import { getVideoSize } from "../utils/video/getVideoSize";
+
+interface FFmpegType {
+  createFFmpeg: (options?: CreateFFmpegOptions) => FFmpeg;
+  fetchFile: (data: string | Buffer | Blob | File) => Promise<Uint8Array>;
+}
 
 export interface ConfigType {
   frameRate?: number;
@@ -16,21 +20,27 @@ export interface ConfigType {
 }
 
 const getFFmpeg = () => {
-  if (!("SharedArrayBuffer" in window)) {
+  if (!("FFmpeg" in window)) {
+    throw new Error("FFmpeg could not be loaded.");
+  } else if (!("SharedArrayBuffer" in window)) {
     throw new Error("SharedArrayBuffer could not be used.");
   }
-  return {
-    createFFmpeg,
-    fetchFile,
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (window as any).FFmpeg as FFmpegType;
 };
 
-export async function loadFFmpeg() {
-  const { createFFmpeg } = getFFmpeg();
-  const ffmpeg = createFFmpeg({ log: true });
-  await ffmpeg.load();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let ffmpeg: FFmpeg | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+const loadFFmpeg = async (): Promise<any> => {
+  if (ffmpeg == null) {
+    const { createFFmpeg } = getFFmpeg();
+    ffmpeg = createFFmpeg({ log: true });
+    await ffmpeg.load();
+  }
   return ffmpeg;
-}
+};
 
 export async function useFFmpeg(
   file: File,
@@ -74,3 +84,12 @@ export async function useFFmpeg(
 
   return ffmpeg.FS("readFile", `output.${fileType}`).buffer;
 }
+
+export const checkCanUseFFmpeg = (): string | null => {
+  try {
+    getFFmpeg();
+    return null;
+  } catch (err) {
+    return `${err}`;
+  }
+};

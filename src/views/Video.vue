@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useFFmpeg, ConfigType } from "../hooks/useFFmpeg";
+import { useFFmpeg, ConfigType, checkCanUseFFmpeg } from "../hooks/useFFmpeg";
 import { selectFile } from "../utils/file/selectFile";
 import { getVideoSize } from "../utils/video/getVideoSize";
 import {
@@ -24,6 +24,8 @@ const videoConfig = reactive<Required<ConfigType>>({
   height: 0,
   fileType: "gif",
 });
+
+const errorMessage = checkCanUseFFmpeg();
 
 async function onClick() {
   file.value = await selectFile();
@@ -51,7 +53,8 @@ async function onChange() {
 </script>
 
 <template>
-  <div class="container">
+  <div v-if="errorMessage">{{ errorMessage }}</div>
+  <div v-else class="container">
     <div class="left">
       <Button @click="onClick" type="primary">上传文件</Button>
       <div v-show="video" class="content" ref="boxRef">
