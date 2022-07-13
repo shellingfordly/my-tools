@@ -1,16 +1,20 @@
-# Vue 3 + TypeScript + Vite
+# Tools
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+这是一个个人向的用于一些文件格式转换的工具，暂时只做了视频格式转换，后续会持续添加功能，可以关注本项目。
 
-## Recommended IDE Setup
+## Feature
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+1. 视频格式转换
 
-## Type Support For `.vue` Imports in TS
+包括视频转 gif/mp4/avi/webm/mpeg/flv，使用 ffmpeg 库，转换格式为 ffmpeg 支持的格式
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+<img src="./docs/imgs/demo.gif" />
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+## Preparation
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+- [vue](https://vuejs.org/)
+- [ffmpeg](https://github.com/ffmpegwasm/ffmpeg.wasm)
+
+## Reference
+
+- [video-to-gif](https://github.com/mryhryki/video-to-gif)
