@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "/@/*": ["src/*"]
+      "@/*": ["src/*"]
     },
     "target": "esnext",
     "useDefineForClassFields": true,
@@ -11,20 +11,23 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
-    "types": ["vite/client", "node"],
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*.js",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "*.d.ts"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "build/**/*.ts",
+    "./*.d.ts",
+    "./auto-imports.d.ts",
+    "./components.d.ts",
+    "./env.d.ts"
+  ]
 }

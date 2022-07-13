@@ -2,13 +2,6 @@
 import { useFFmpeg, ConfigType, checkCanUseFFmpeg } from "../hooks/useFFmpeg";
 import { selectFile } from "../utils/file/selectFile";
 import { getVideoSize } from "../utils/video/getVideoSize";
-import {
-  Button,
-  Input,
-  Select,
-  Option,
-  InputNumber,
-} from "@arco-design/web-vue";
 
 const boxRef = ref();
 const resRef = ref();
@@ -56,41 +49,41 @@ async function onChange() {
   <div v-if="errorMessage">{{ errorMessage }}</div>
   <div v-else class="container">
     <div class="left">
-      <Button @click="onClick" type="primary">上传文件</Button>
+      <a-button @click="onClick" type="primary">上传文件</a-button>
       <div v-show="video" class="content" ref="boxRef">
         <div>
           <span>帧数 :</span>
-          <InputNumber type="text" v-model="videoConfig.frameRate" />
+          <a-input-number type="text" v-model="videoConfig.frameRate" />
         </div>
         <div>
           <span>width:</span>
-          <InputNumber type="text" v-model="videoConfig.width" />
+          <a-input-number type="text" v-model="videoConfig.width" />
         </div>
         <div>
           <span>height:</span>
-          <InputNumber type="text" v-model="videoConfig.height" />
+          <a-input-number type="text" v-model="videoConfig.height" />
         </div>
         <div>
           <span>开始时间:</span>
-          <InputNumber type="text" v-model="videoConfig.rangeStart" />
+          <a-input-number type="text" v-model="videoConfig.rangeStart" />
         </div>
         <div>
           <span>结束时间:</span>
-          <InputNumber type="text" v-model="videoConfig.rangeEnd" />
+          <a-input-number type="text" v-model="videoConfig.rangeEnd" />
         </div>
         <div>
           <span>文件格式:</span>
-          <Select :style="{ width: '320px' }" v-model="videoConfig.fileType">
-            <Option value="gif">gif</Option>
-            <Option value="mp4">mp4</Option>
-            <Option value="avi">avi</Option>
-            <Option value="webm">webm</Option>
-            <Option value="mpeg">mpeg</Option>
-            <Option value="flv">flv</Option>
-          </Select>
+          <a-select :style="{ width: '320px' }" v-model="videoConfig.fileType">
+            <a-option value="gif">gif</a-option>
+            <a-option value="mp4">mp4</a-option>
+            <a-option value="avi">avi</a-option>
+            <a-option value="webm">webm</a-option>
+            <a-option value="mpeg">mpeg</a-option>
+            <a-option value="flv">flv</a-option>
+          </a-select>
         </div>
         <div>
-          <Button @click="onChange" type="primary">转换</Button>
+          <AButton @click="onChange" type="primary">转换</AButton>
         </div>
       </div>
     </div>
@@ -103,13 +96,13 @@ async function onChange() {
           style="width: 300px; height: 200px"
         />
         <video v-else :src="resultUrl" autoplay loop width="500" height="300" />
-        <Button
+        <a-button
           type="outline"
           :href="resultUrl"
           :download="`output.${videoConfig.fileType}`"
         >
           Download
-        </Button>
+        </a-button>
       </template>
     </div>
   </div>
