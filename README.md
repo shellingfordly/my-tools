@@ -2,6 +2,16 @@
 
 这是一个个人向的用于一些文件格式转换的工具，暂时只做了视频格式转换，后续会持续添加功能，可以关注本项目。
 
+## Run
+
+```
+git clone https://github.com/shellingfordly/my-tools.git
+cd my-tools
+pnpm i
+pnpm run dev
+open http://localhost:3080/
+```
+
 ## Feature
 
 1. 视频格式转换
