@@ -11,7 +11,8 @@ import {
 } from "@arco-design/web-vue";
 
 const boxRef = ref();
-const image = ref();
+const resRef = ref();
+const resultUrl = ref();
 const file = ref<File>();
 const progress = ref(0);
 const video = ref(false);
@@ -35,12 +36,17 @@ async function onClick() {
 async function onChange() {
   if (!file.value) return;
 
-  const res = await useFFmpeg(file.value, videoConfig, (obj: any) => {
+  const buffer = await useFFmpeg(file.value, videoConfig, (obj: any) => {
     progress.value = Math.floor((obj.time / videoConfig.rangeEnd) * 100);
     console.log("progress", progress.value);
   });
-  const url = URL.createObjectURL(new Blob([res], { type: "image/gif" }));
-  image.value = url;
+
+  const type =
+    videoConfig.fileType === "gif"
+      ? "image/gif"
+      : `video${videoConfig.fileType}`;
+  const url = URL.createObjectURL(new Blob([buffer], { type }));
+  resultUrl.value = url;
 }
 </script>
 
@@ -85,9 +91,19 @@ async function onChange() {
         </div>
       </div>
     </div>
-    <div>
+    <div ref="resRef">
       <div v-if="progress && progress < 100">loading {{ progress }}%</div>
-      <img v-if="image" :src="image" />
+      <template v-if="resultUrl">
+        <img v-if="videoConfig.fileType === 'gif'" :src="resultUrl" />
+        <video v-else :src="resultUrl" autoplay loop width="500" height="300" />
+        <Button
+          type="outline"
+          :href="resultUrl"
+          :download="`output.${videoConfig.fileType}`"
+        >
+          Download
+        </Button>
+      </template>
     </div>
   </div>
 </template>

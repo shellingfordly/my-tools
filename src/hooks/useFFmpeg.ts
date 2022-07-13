@@ -86,5 +86,5 @@ export async function useFFmpeg(
     `output.${fileType}`
   );
 
-  return ffmpeg.FS("readFile", "output.gif").buffer;
+  return ffmpeg.FS("readFile", `output.${fileType}`).buffer;
 }
