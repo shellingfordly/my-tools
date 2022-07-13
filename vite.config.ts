@@ -5,7 +5,13 @@ import AutoImport from "unplugin-auto-import/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: { port: 3080 },
+  server: {
+    port: 3080,
+    headers: {
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+    },
+  },
   resolve: {
     alias: [
       {
