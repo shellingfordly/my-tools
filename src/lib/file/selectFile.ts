@@ -8,11 +8,21 @@ export function selectFile(): Promise<File> {
       if (input.files != null && input.files.length > 0) {
         const file = input.files.item(0);
         if (file != null) {
-          resolve(file);
+          resolve(handleFile(file));
         }
       }
       reject("文件上传失败！");
     };
     input.click();
   });
+}
+
+function handleFile(file: File) {
+  const name = "new_file" + getFileSuffix(file.name);
+  const newFile = new File([file], name, { type: file.type });
+  return newFile;
+}
+
+function getFileSuffix(name: string) {
+  return name.substring(name.lastIndexOf("."));
 }

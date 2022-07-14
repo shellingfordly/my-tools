@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "/@/*": ["src/*"]
     },
     "target": "esnext",
     "useDefineForClassFields": true,
@@ -25,9 +25,6 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "build/**/*.ts",
-    "./*.d.ts",
-    "./auto-imports.d.ts",
-    "./components.d.ts",
-    "./env.d.ts"
+    "*.d.ts"
   ]
 }

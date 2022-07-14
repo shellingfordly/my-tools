@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/video",
-    component: () => import("/@/views/Video.vue"),
+    component: () => import("/@/views/video/Video.vue"),
   },
 ];
 

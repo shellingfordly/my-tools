@@ -1,37 +1,32 @@
-import type {
-  CreateFFmpegOptions,
+import {
+  createFFmpeg,
+  fetchFile,
   FFmpeg,
   ProgressCallback,
 } from "@ffmpeg/ffmpeg";
-import { getVideoSize } from "../utils/video/getVideoSize";
 
-interface FFmpegType {
-  createFFmpeg: (options?: CreateFFmpegOptions) => FFmpeg;
-  fetchFile: (data: string | Buffer | Blob | File) => Promise<Uint8Array>;
-}
+export type FileType = "gif" | "mp4" | "avi" | "webm" | "mpeg" | "flv";
 
 export interface ConfigType {
   frameRate?: number;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
   rangeStart?: number;
-  rangeEnd?: number;
-  fileType?: "gif" | "mp4" | "avi" | "webm" | "mpeg" | "flv";
+  rangeEnd: number;
+  fileType: FileType;
 }
 
 const getFFmpeg = () => {
-  if (!("FFmpeg" in window)) {
-    throw new Error("FFmpeg could not be loaded.");
-  } else if (!("SharedArrayBuffer" in window)) {
+  if (!("SharedArrayBuffer" in window)) {
     throw new Error("SharedArrayBuffer could not be used.");
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (window as any).FFmpeg as FFmpegType;
+  return {
+    createFFmpeg,
+    fetchFile,
+  };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let ffmpeg: FFmpeg | null = null;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const loadFFmpeg = async (): Promise<any> => {
   if (ffmpeg == null) {
@@ -53,16 +48,11 @@ export async function useFFmpeg(
   ffmpeg.setProgress(progressFn);
 
   const {
-    width: defaultWidth,
-    height: defaultHeight,
-    duration,
-  } = await getVideoSize(file);
-  const {
     frameRate = 25,
-    width = defaultWidth,
-    height = defaultHeight,
+    width,
+    height,
     rangeStart = 0,
-    rangeEnd = duration,
+    rangeEnd,
     fileType,
   } = config;
 
