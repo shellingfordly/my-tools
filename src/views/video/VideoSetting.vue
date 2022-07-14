@@ -8,6 +8,7 @@ const props = defineProps<{
   fileInfo?: VideoInfoType;
 }>();
 
+const FileTypeList = ["gif", "mp4", "avi", "webm", "mpeg", "flv"];
 const loading = ref(false);
 const config = reactive<Required<ConfigType>>({
   frameRate: 25,
@@ -35,7 +36,8 @@ async function onChange() {
   if (!file) return;
   loading.value = true;
   const buffer = await useFFmpeg(file, config, ({ time }: any) => {
-    percent.value = formatNumber(time / config.rangeEnd, 2);
+    const t = time >= 0 ? time : 0;
+    percent.value = formatNumber(t / config.rangeEnd, 2);
   });
   const type =
     config.fileType === "gif" ? "image/gif" : `video${config.fileType}`;
@@ -70,12 +72,9 @@ async function onChange() {
     <div>
       <span>文件格式:</span>
       <a-select :style="{ width: '320px' }" v-model="config.fileType">
-        <a-option value="gif">gif</a-option>
-        <a-option value="mp4">mp4</a-option>
-        <a-option value="avi">avi</a-option>
-        <a-option value="webm">webm</a-option>
-        <a-option value="mpeg">mpeg</a-option>
-        <a-option value="flv">flv</a-option>
+        <a-option :value="item" v-for="item in FileTypeList" :key="item">
+          {{ item.toUpperCase() }}
+        </a-option>
       </a-select>
     </div>
     <div class="btn">

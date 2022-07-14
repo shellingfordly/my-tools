@@ -1,17 +1,6 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
 import type { App } from "vue";
-
-const routes: RouteRecordRaw[] = [
-  {
-    path: "/",
-    redirect: "/video",
-  },
-  {
-    path: "/video",
-    component: () => import("/@/views/video/Video.vue"),
-  },
-];
+import { createRouter, createWebHashHistory } from "vue-router";
+import { routes } from "./routes";
 
 const router = createRouter({
   history: createWebHashHistory(),
