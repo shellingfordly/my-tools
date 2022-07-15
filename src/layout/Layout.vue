@@ -21,7 +21,7 @@ function onClick(path: string) {
 </script>
 
 <template>
-  <a-layout>
+  <a-layout style="height: 100%">
     <a-layout-header class="header">
       <div style="width: 500px"></div>
       <a-menu
@@ -35,7 +35,7 @@ function onClick(path: string) {
         </a-menu-item>
       </a-menu>
     </a-layout-header>
-    <a-layout>
+    <a-layout style="height: 100%">
       <RouterView />
     </a-layout>
   </a-layout>

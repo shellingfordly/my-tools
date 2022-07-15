@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
+import { ToolsRoute } from "./modules/tools";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -10,13 +11,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import("/@/layout/Layout.vue"),
     redirect: "/home/video",
     children: [
-      {
-        path: "/home/tools",
-        component: () => import("/@/views/tools/Tools.vue"),
-        meta: {
-          name: "常用工具",
-        },
-      },
+      ToolsRoute,
       {
         path: "/home/video",
         component: () => import("/@/views/video/Video.vue"),
