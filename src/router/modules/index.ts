@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
-import { ToolsRoute } from "./modules/tools";
+import { ToolsRoute } from "./tools";
 
 export const routes: RouteRecordRaw[] = [
   {
