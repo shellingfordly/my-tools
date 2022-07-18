@@ -2,17 +2,17 @@ import { RouteRecordRaw } from "vue-router";
 
 export const ToolsRoute: RouteRecordRaw = {
   path: "/home/tools",
-  component: () => import("/@/views/tools/ToolsPage.vue"),
-  redirect: "/home/tools/queer",
+  component: () => import("/@/pages/tools/ToolsPage.vue"),
+  redirect: "/home/tools/counter",
   meta: {
     name: "常用工具",
   },
   children: [
     {
-      path: "/home/tools/queer",
-      component: () => import("../../views/tools/components/queer/Queer.vue"),
+      path: "/home/tools/counter",
+      component: () => import("/@/views/tools/counter/Counter.vue"),
       meta: {
-        name: "奇怪的计算工具",
+        name: "计算工具",
       },
     },
   ],

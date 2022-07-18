@@ -1,5 +1,6 @@
 import type { RouteRecordRaw } from "vue-router";
 import { ToolsRoute } from "./tools";
+import { VideoRoute } from "./video";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -10,15 +11,6 @@ export const routes: RouteRecordRaw[] = [
     path: "/home",
     component: () => import("/@/layout/Layout.vue"),
     redirect: "/home/video",
-    children: [
-      ToolsRoute,
-      {
-        path: "/home/video",
-        component: () => import("/@/views/video/Video.vue"),
-        meta: {
-          name: "视频处理",
-        },
-      },
-    ],
+    children: [ToolsRoute, VideoRoute],
   },
 ];

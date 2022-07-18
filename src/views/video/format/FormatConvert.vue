@@ -1,8 +1,9 @@
+<!-- 视频格式转换 -->
 <script lang="ts" setup>
 import { selectFile } from "/@/lib/file/selectFile";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
-import VideoSetting from "./VideoSetting.vue";
-import VideoCard from "./VideoCard.vue";
+import VideoSetting from "./components/VideoSetting.vue";
+import VideoCard from "./components/VideoCard.vue";
 import { ExportFileType, VideoInfoType } from "/@/types/video";
 
 const fileList = reactive<VideoInfoType[]>([]);

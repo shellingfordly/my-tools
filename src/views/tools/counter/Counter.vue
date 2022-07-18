@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import Counter from "./Counter/Counter.vue";
+import MathExpression from "./math/MathExpression.vue";
 </script>
 
 <template>
-  <Counter />
+  <MathExpression />
 </template>
 
 <style scoped lang="less"></style>
