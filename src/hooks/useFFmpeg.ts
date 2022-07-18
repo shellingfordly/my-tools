@@ -4,17 +4,7 @@ import {
   FFmpeg,
   ProgressCallback,
 } from "@ffmpeg/ffmpeg";
-
-export type FileType = "gif" | "mp4" | "avi" | "webm" | "mpeg" | "flv";
-
-export interface ConfigType {
-  frameRate?: number;
-  width: number;
-  height: number;
-  rangeStart?: number;
-  rangeEnd: number;
-  fileType: FileType;
-}
+import { VideoConfigType } from "/@/types/video";
 
 const getFFmpeg = () => {
   if (!("SharedArrayBuffer" in window)) {
@@ -39,7 +29,7 @@ const loadFFmpeg = async (): Promise<any> => {
 
 export async function useFFmpeg(
   file: File,
-  config: ConfigType,
+  config: VideoConfigType,
   progressFn: ProgressCallback = () => {}
 ) {
   const ffmpeg = await loadFFmpeg();

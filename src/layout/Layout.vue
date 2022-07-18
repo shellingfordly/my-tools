@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { routes } from "/@/router/routes";
+import { routes } from "/@/router/modules";
 
 const menus = computed(() => {
   const route = routes.find((v) => v.path === "/home");

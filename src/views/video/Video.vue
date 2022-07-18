@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { selectFile } from "/@/lib/file/selectFile";
-import { getVideoInfo, VideoInfoType } from "/@/lib/video/getVideoInfo";
+import { getVideoInfo } from "/@/lib/video/getVideoInfo";
 import VideoSetting from "./VideoSetting.vue";
 import VideoCard from "./VideoCard.vue";
-import { FileType } from "/@/hooks/useFFmpeg";
+import { ExportFileType, VideoInfoType } from "/@/types/video";
 
 const fileList = reactive<VideoInfoType[]>([]);
 const selectedFile = ref<VideoInfoType>({} as any);
-const resList = reactive<{ url: string; type: FileType }[]>([]);
+const resList = reactive<ExportFileType[]>([]);
 
 async function onClick() {
   const file = await selectFile();
@@ -42,7 +42,7 @@ function onChange(file: any) {
       </div>
     </div>
     <div class="right">
-      <video-card :url="item.url" :type="item.type" v-for="item in resList" />
+      <video-card :file="item" v-for="item in resList" />
     </div>
   </div>
 </template>

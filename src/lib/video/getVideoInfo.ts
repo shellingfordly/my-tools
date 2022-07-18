@@ -1,12 +1,4 @@
-export interface VideoInfoType {
-  file: File;
-  el: Element;
-  id: string;
-  url: string;
-  width: number;
-  height: number;
-  duration: number;
-}
+import { VideoInfoType } from "/@/types/video";
 
 export function getVideoInfo(file: File): Promise<VideoInfoType> {
   return new Promise((resolve, reject) => {

@@ -1,16 +1,23 @@
 <script lang="ts" setup>
-import { ConfigType, useFFmpeg } from "/@/hooks/useFFmpeg";
-import { VideoInfoType } from "/@/lib/video/getVideoInfo";
+import { useFFmpeg } from "/@/hooks/useFFmpeg";
 import { formatNumber } from "/@/lib/utils";
+import { VideoConfigType, VideoInfoType, VideoFileType } from "/@/types/video";
 
 const emit = defineEmits(["change"]);
 const props = defineProps<{
   fileInfo?: VideoInfoType;
 }>();
 
-const FileTypeList = ["gif", "mp4", "avi", "webm", "mpeg", "flv"];
+const FileTypeList: VideoFileType[] = [
+  "gif",
+  "mp4",
+  "avi",
+  "webm",
+  "mpeg",
+  "flv",
+];
 const loading = ref(false);
-const config = reactive<Required<ConfigType>>({
+const config = reactive<Required<VideoConfigType>>({
   frameRate: 25,
   rangeStart: 0,
   rangeEnd: 10,
@@ -39,11 +46,13 @@ async function onChange() {
     const t = time >= 0 ? time : 0;
     percent.value = formatNumber(t / config.rangeEnd, 2);
   });
+  (window as any).buffer = buffer;
+
   const type =
     config.fileType === "gif" ? "image/gif" : `video${config.fileType}`;
   const url = URL.createObjectURL(new Blob([buffer], { type }));
   loading.value = false;
-  emit("change", { url, type: config.fileType });
+  emit("change", { url, type: config.fileType, size: buffer.byteLength });
 }
 </script>
 
