@@ -18,8 +18,6 @@ export const counterMap: any = {
 };
 
 export function counter(list: string[]) {
-  console.log("list", list);
-
   const stack: number[] = [];
   let result = 0;
 
