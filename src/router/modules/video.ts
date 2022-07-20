@@ -1,19 +1,28 @@
 import { RouteRecordRaw } from "vue-router";
 
-export const VideoRoute: RouteRecordRaw = {
-  path: "/home/video",
+const VideoRoute: RouteRecordRaw = {
+  path: "/video",
   component: () => import("/@/layout/pages/MenuPage.vue"),
-  redirect: "/home/video/format",
+  redirect: "/video/format",
   meta: {
     name: "视频处理",
   },
   children: [
     {
-      path: "/home/video/format",
-      component: () => import("/@/views/video/format/FormatConvert.vue"),
+      path: "/video/format",
+      component: () => import("/@/views/video/format/VideoFormat.vue"),
       meta: {
         name: "格式转换",
       },
     },
+    {
+      path: "/video/clip",
+      component: () => import("/@/views/video/clip/VideoClip.vue"),
+      meta: {
+        name: "视频剪辑",
+      },
+    },
   ],
 };
+
+export default VideoRoute;
