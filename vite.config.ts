@@ -29,6 +29,7 @@ export default defineConfig({
     Unocss(),
     AutoImport({
       imports: ["vue", "vue-router"],
+      dirs: ["./src/hooks"],
     }),
     AutoComponents({
       resolvers: [
