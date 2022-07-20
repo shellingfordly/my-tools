@@ -3,9 +3,9 @@ import Header from "./Header.vue";
 </script>
 
 <template>
-  <a-layout style="height: 100%">
+  <a-layout hp-100>
     <Header />
-    <a-layout style="height: 100%">
+    <a-layout hp-100>
       <RouterView />
     </a-layout>
   </a-layout>

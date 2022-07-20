@@ -6,6 +6,7 @@ import presetRemToPx from "@unocss/preset-rem-to-px";
 
 export default defineConfig({
   rules: [
+    [/^fs-(\d+)/, ([, d]) => ({ "font-size": `${d}px` })],
     [
       /^(w|h)(p)?-(\d+)(i)?$/,
       ([, wh, p, d, i]) => {
