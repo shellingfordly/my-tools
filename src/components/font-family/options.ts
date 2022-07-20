@@ -1,4 +1,5 @@
 export const FontFamilyOptions = [
+  { label: "默认", value: "auto" },
   { label: "宋体", value: "SimSun" },
   { label: "黑体", value: "SimHei" },
   { label: "微软雅黑", value: "Microsoft Yahei" },
