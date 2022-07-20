@@ -30,8 +30,8 @@ function onChange(f: any) {
   <div mb-20>
     <a-button @click="onClick" type="primary">上传文件</a-button>
   </div>
-  <div flex b-2-eee>
-    <div wp-50 p-20 br-2-eee>
+  <div flex b-1>
+    <div wp-50 p-20 b-r-1>
       <VideoSetting :fileInfo="file" @change="onChange" />
       <div
         :class="['video-box', file.id === f.id && 'selected']"
@@ -50,10 +50,10 @@ function onChange(f: any) {
 
 <style lang="less" scoped>
 .video-box {
-  @apply f-jc p-10 b-2-eee b-rd-10 cursor-pointer mb-10;
+  @apply f-jc p-10 b-1 b-rd-10 cursor-pointer mb-10;
 
   &:hover {
-    border: 2px dashed rgb(var(--primary-6));
+    border-color: rgb(var(--primary-6));
   }
 }
 

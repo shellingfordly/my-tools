@@ -1,15 +1,15 @@
 import { RouteRecordRaw } from "vue-router";
 
-export const CommonRoute: RouteRecordRaw = {
-  path: "/home/common",
+const CommonRoute: RouteRecordRaw = {
+  path: "/common",
   component: () => import("/@/layout/pages/MenuPage.vue"),
-  redirect: "/home/common/counter",
+  redirect: "/common/counter",
   meta: {
     name: "常用工具",
   },
   children: [
     {
-      path: "/home/common/counter",
+      path: "/common/counter",
       component: () => import("/@/views/common/counter/Counter.vue"),
       meta: {
         name: "计算工具",
@@ -17,3 +17,5 @@ export const CommonRoute: RouteRecordRaw = {
     },
   ],
 };
+
+export default CommonRoute;
