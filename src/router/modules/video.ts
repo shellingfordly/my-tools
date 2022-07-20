@@ -2,7 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 
 export const VideoRoute: RouteRecordRaw = {
   path: "/home/video",
-  component: () => import("/@/pages/video/VideoPage.vue"),
+  component: () => import("/@/layout/pages/MenuPage.vue"),
   redirect: "/home/video/format",
   meta: {
     name: "视频处理",
