@@ -7,85 +7,57 @@ import VideoCard from "./components/VideoCard.vue";
 import { ExportFileType, VideoInfoType } from "/@/types/video";
 
 const fileList = reactive<VideoInfoType[]>([]);
-const selectedFile = ref<VideoInfoType>({} as any);
+const file = ref<VideoInfoType>({} as any);
 const resList = reactive<ExportFileType[]>([]);
 
 async function onClick() {
-  const file = await selectFile();
-  const fileInfo = await getVideoInfo(file);
+  const _file = await selectFile();
+  const fileInfo = await getVideoInfo(_file);
   onSelected(fileInfo);
   fileList.push(fileInfo);
 }
 
 function onSelected(f: VideoInfoType) {
-  selectedFile.value = f;
+  file.value = f;
 }
 
-function onChange(file: any) {
-  resList.push(file);
+function onChange(f: any) {
+  resList.push(f);
 }
 </script>
 
 <template>
-  <div class="header">
+  <div mb-20>
     <a-button @click="onClick" type="primary">上传文件</a-button>
   </div>
-  <div class="content">
-    <div class="left">
-      <VideoSetting :fileInfo="selectedFile" @change="onChange" />
+  <div flex b-2-eee>
+    <div wp-50 p-20 br-2-eee>
+      <VideoSetting :fileInfo="file" @change="onChange" />
       <div
-        :class="['video-box', selectedFile.id === file.id && 'selected']"
-        v-for="file in fileList"
-        :key="file.id"
-        @click="onSelected(file)"
+        :class="['video-box', file.id === f.id && 'selected']"
+        v-for="f in fileList"
+        :key="f.id"
+        @click="onSelected(f)"
       >
-        <video :src="file.url" autoplay loop></video>
+        <video :src="f.url" h-300 autoplay loop></video>
       </div>
     </div>
-    <div class="right">
+    <div wp-50 p-20 class="right">
       <video-card :file="item" v-for="item in resList" />
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.header {
-  padding: 20px;
+.video-box {
+  @apply f-jc p-10 b-2-eee b-rd-10 cursor-pointer mb-10;
+
+  &:hover {
+    border: 2px dashed rgb(var(--primary-6));
+  }
 }
-.content {
-  display: flex;
-  width: 100%;
-  border: 2px solid #eee;
 
-  .left,
-  .right {
-    width: 50%;
-    padding: 20px;
-  }
-
-  .left {
-    border-right: 2px solid #eee;
-
-    .video-box {
-      padding: 10px;
-      border: 2px solid #eee;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-bottom: 10px;
-
-      video {
-        width: 100%;
-        height: 300px;
-      }
-
-      &:hover {
-        border: 2px dashed rgb(var(--primary-6));
-      }
-    }
-
-    .selected {
-      border: 2px solid rgb(var(--primary-6));
-    }
-  }
+.selected {
+  border-color: rgb(var(--primary-6));
 }
 </style>

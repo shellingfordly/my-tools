@@ -20,10 +20,10 @@ function onCount() {
 
 <template>
   <a-card :title="title">
-    <div class="container w-100%">
-      <a-textarea class="w-45%! h-25" v-model="value" allow-clear />
+    <div f-ac-jb>
+      <a-textarea v-model="value" allow-clear wp-45i h-100 />
       <a-button type="primary" @click="onCount">=</a-button>
-      <div class="result w-45% h-25">
+      <div class="result">
         <span v-if="type === 'math'">{{ result }}</span>
         <template v-else>
           <span v-for="item in result" :key="item"> {{ item }}</span>
@@ -34,14 +34,13 @@ function onCount() {
 </template>
 
 <style scoped lang="less">
-.container {
-  @apply flex items-center justify-between;
-
-  .result {
-    padding: 4px 12px;
-    background-color: var(--color-fill-2);
-    border: 1px solid transparent;
-    border-radius: var(--border-radius-small);
-  }
+.result {
+  width: 45%;
+  height: 100px;
+  padding: 4px 12px;
+  background-color: var(--color-fill-2);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-small);
+  justify-content: end;
 }
 </style>

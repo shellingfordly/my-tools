@@ -46,13 +46,13 @@ async function onChange() {
     const t = time >= 0 ? time : 0;
     percent.value = formatNumber(t / config.rangeEnd, 2);
   });
-  (window as any).buffer = buffer;
 
   const type =
     config.fileType === "gif" ? "image/gif" : `video${config.fileType}`;
   const url = URL.createObjectURL(new Blob([buffer], { type }));
-  loading.value = false;
+
   emit("change", { url, type: config.fileType, size: buffer.byteLength });
+  loading.value = false;
 }
 </script>
 
@@ -80,14 +80,14 @@ async function onChange() {
     </div>
     <div>
       <span>文件格式:</span>
-      <a-select :style="{ width: '320px' }" v-model="config.fileType">
+      <a-select w-320i v-model="config.fileType">
         <a-option :value="item" v-for="item in FileTypeList" :key="item">
           {{ item.toUpperCase() }}
         </a-option>
       </a-select>
     </div>
-    <div class="btn">
-      <a-button :loading="loading" @click="onChange" type="primary">
+    <div>
+      <a-button :loading="loading" @click="onChange" type="primary" mr-10>
         开始转换
       </a-button>
       <a-progress
@@ -95,6 +95,7 @@ async function onChange() {
         :percent="percent"
         :max="100"
         :min="0"
+        w-200i
       />
     </div>
   </div>
@@ -113,18 +114,6 @@ async function onChange() {
 
     span:last-child {
       width: 320px;
-    }
-  }
-
-  .btn {
-    padding: 10px 50px;
-
-    button {
-      margin-right: 10px;
-    }
-
-    > div:last-child {
-      width: 200px;
     }
   }
 }
