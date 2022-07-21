@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ExportFileType } from "/@/types/video";
+import type { ExportFileType } from "/@/types";
 
 const props = defineProps<{
   file: ExportFileType;

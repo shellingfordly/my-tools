@@ -1,1 +1,1 @@
-export * from "./file.type";
+export * from "./video.type";

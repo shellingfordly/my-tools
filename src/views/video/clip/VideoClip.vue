@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { FileItem } from "@arco-design/web-vue";
+import type { VideoInfoType, ClipImageItem } from "/@/types";
+import type { FFmpeg } from "@ffmpeg/ffmpeg";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
-import type { VideoInfoType } from "/@/types/video";
 import ClipSetting from "./components/ClipSetting.vue";
-import { useVideoClip, ClipImageItem } from "./hooks/useVideoClip";
 
 const fileInfo = ref<VideoInfoType>({} as any);
 const imgList = ref<ClipImageItem[]>([]);
@@ -13,10 +13,11 @@ const urlList = computed(() => {
     .map((item) => item.url);
 });
 
+const { writeFile, getClipImages } = useVideoClip();
+
 watch(
   () => fileInfo.value?.file,
   async (file) => {
-    const { writeFile, getClipImages } = await useVideoClip();
     await writeFile(file);
     imgList.value = await getClipImages({
       file,

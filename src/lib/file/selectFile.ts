@@ -1,4 +1,4 @@
-import { handleFile } from "./handleFiel";
+import { handleFile } from "./handleFile";
 
 export function selectFile(): Promise<File> {
   return new Promise((resolve, reject) => {

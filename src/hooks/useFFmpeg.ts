@@ -1,75 +1,38 @@
-import {
-  createFFmpeg,
-  fetchFile,
-  FFmpeg,
-  ProgressCallback,
-} from "@ffmpeg/ffmpeg";
-import { VideoConfigType } from "/@/types/video";
-
-export const getFFmpeg = () => {
-  if (!("SharedArrayBuffer" in window)) {
-    throw new Error("SharedArrayBuffer could not be used.");
-  }
-  return {
-    createFFmpeg,
-    fetchFile,
-  };
-};
+import { createFFmpeg, fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
+import { Message } from "@arco-design/web-vue";
 
 let ffmpeg: FFmpeg | null = null;
 
-export const loadFFmpeg = async (): Promise<any> => {
-  if (ffmpeg == null) {
-    const { createFFmpeg } = getFFmpeg();
+export function useFFmpeg() {
+  if (!("SharedArrayBuffer" in window)) {
+    Message.error("浏览器不支持 SharedArrayBuffer， 无法使用视频功能！");
+    throw new Error("SharedArrayBuffer could not be used.");
+  }
+  if (!ffmpeg) {
     ffmpeg = createFFmpeg({ log: true });
-    await ffmpeg.load();
   }
-  return ffmpeg;
-};
 
-export async function useFFmpeg(
-  file: File,
-  config: VideoConfigType,
-  progressFn: ProgressCallback = () => {}
-) {
-  const ffmpeg = await loadFFmpeg();
-  const { fetchFile } = getFFmpeg();
+  onMounted(loadFFmpeg);
 
-  ffmpeg.setProgress(progressFn);
+  onUnmounted(() => {
+    ffmpeg = null;
+  });
 
-  const {
-    frameRate = 25,
-    width,
-    height,
-    rangeStart = 0,
-    rangeEnd,
-    fileType,
-  } = config;
+  async function loadFFmpeg() {
+    if (!ffmpeg?.isLoaded()) {
+      await ffmpeg?.load();
+    }
+  }
 
-  ffmpeg.FS("writeFile", file.name, await fetchFile(file));
+  // function checkCanUseFFmpeg() {
+  //   try {
+  //     ffmpeg?.run();
+  //     return true;
+  //   } catch (error) {
+  //     console.warn("[MY-TOOL]:", error);
+  //   }
+  //   return false;
+  // }
 
-  await ffmpeg.run(
-    "-i",
-    file.name,
-    "-r",
-    `${frameRate}`,
-    "-ss",
-    `${rangeStart}`,
-    "-to",
-    `${rangeEnd}`,
-    "-vf",
-    `scale=${width}:${height},fade=t=in:st=${rangeStart}:d=0.05`,
-    `output.${fileType}`
-  );
-
-  return ffmpeg.FS("readFile", `output.${fileType}`).buffer;
+  return { ffmpeg, fetchFile, loadFFmpeg };
 }
-
-export const checkCanUseFFmpeg = (): string | null => {
-  try {
-    getFFmpeg();
-    return null;
-  } catch (err) {
-    return `${err}`;
-  }
-};

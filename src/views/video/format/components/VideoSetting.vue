@@ -1,21 +1,13 @@
 <script lang="ts" setup>
-import { useFFmpeg } from "/@/hooks/useFFmpeg";
 import { formatNumber } from "/@/lib/utils";
-import { VideoConfigType, VideoInfoType, VideoFileType } from "/@/types/video";
+import type { VideoConfigType, VideoInfoType } from "/@/types";
 
 const emit = defineEmits(["change"]);
 const props = defineProps<{
   fileInfo?: VideoInfoType;
 }>();
 
-const FileTypeList: VideoFileType[] = [
-  "gif",
-  "mp4",
-  "avi",
-  "webm",
-  "mpeg",
-  "flv",
-];
+const FileTypeList = ["gif", "mp4", "avi", "webm", "mpeg", "flv"];
 const loading = ref(false);
 const config = reactive<Required<VideoConfigType>>({
   frameRate: 25,
@@ -26,6 +18,7 @@ const config = reactive<Required<VideoConfigType>>({
   fileType: "gif",
 });
 const percent = ref(0);
+const { videoFormat, setProgress } = useVideoFormat();
 
 watch(
   () => props.fileInfo,
@@ -38,14 +31,16 @@ watch(
   }
 );
 
+setProgress(({ time }: any) => {
+  const t = time >= 0 ? time : 0;
+  percent.value = formatNumber(t / config.rangeEnd, 2);
+});
+
 async function onChange() {
   const file = props.fileInfo?.file;
   if (!file) return;
   loading.value = true;
-  const buffer = await useFFmpeg(file, config, ({ time }: any) => {
-    const t = time >= 0 ? time : 0;
-    percent.value = formatNumber(t / config.rangeEnd, 2);
-  });
+  const buffer = await videoFormat(file, config);
 
   const type =
     config.fileType === "gif" ? "image/gif" : `video/${config.fileType}`;

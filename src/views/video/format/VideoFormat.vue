@@ -4,7 +4,7 @@ import { selectFile } from "/@/lib/file/selectFile";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
 import VideoSetting from "./components/VideoSetting.vue";
 import VideoCard from "./components/VideoCard.vue";
-import { ExportFileType, VideoInfoType } from "/@/types/video";
+import { ExportFileType, VideoInfoType } from "/@/types";
 
 const fileList = reactive<VideoInfoType[]>([]);
 const file = ref<VideoInfoType>({} as any);

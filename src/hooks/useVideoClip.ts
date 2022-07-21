@@ -1,11 +1,5 @@
-import { createFFmpeg, fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
-import { bufferChangeUrl } from "/@/lib/file/handleFiel";
-
-export async function useFFmpeg() {
-  const ffmpeg = createFFmpeg({ log: true });
-  await ffmpeg.load();
-  return { ffmpeg, fetchFile };
-}
+import type { FFmpeg } from "@ffmpeg/ffmpeg";
+import { bufferChangeUrl } from "/@/lib/file/handleFile";
 
 interface ClipImageOptions {
   file: File;
@@ -20,8 +14,8 @@ export interface ClipImageItem {
   fileName: string;
 }
 
-export async function useVideoClip() {
-  const { ffmpeg, fetchFile } = await useFFmpeg();
+export function useVideoClip() {
+  const { ffmpeg, fetchFile } = useFFmpeg();
 
   async function writeFile(file: File) {
     ffmpeg.FS("writeFile", file.name, await fetchFile(file));
@@ -66,7 +60,7 @@ export async function useVideoClip() {
     return imgList;
   }
 
-  return { writeFile, readFile, clipImage, getClipImages };
+  return { ffmpeg, writeFile, readFile, clipImage, getClipImages };
 }
 
 async function _clipImage(ffmpeg: FFmpeg, fileName: string, time: number) {

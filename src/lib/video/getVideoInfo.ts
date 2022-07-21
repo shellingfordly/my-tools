@@ -1,6 +1,6 @@
-import type { VideoInfoType } from "/@/types/video";
+import type { VideoInfoType } from "../../types/video.type";
 import { FileItem } from "@arco-design/web-vue";
-import { handleFile } from "../file/handleFiel";
+import { handleFile } from "../file/handleFile";
 
 export function getVideoInfo(_file: File | FileItem): Promise<VideoInfoType> {
   return new Promise((resolve, reject) => {
