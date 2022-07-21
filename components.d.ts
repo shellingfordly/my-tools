@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     ASelect: typeof import('@arco-design/web-vue')['Select']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATextarea: typeof import('@arco-design/web-vue')['Textarea']
+    ATypographyParagraph: typeof import('@arco-design/web-vue')['TypographyParagraph']
     ATypographyTitle: typeof import('@arco-design/web-vue')['TypographyTitle']
     AUpload: typeof import('@arco-design/web-vue')['Upload']
     Counter: typeof import('./src/components/Counter/Counter.vue')['default']

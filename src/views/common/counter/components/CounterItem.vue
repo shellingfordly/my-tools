@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { mathExpressionCounter } from "/@/lib/counter";
 import relationship from "relationship.js";
+import MathCounterHelpModal from "./MathCounterHelpModal.vue";
 
 const props = defineProps<{
   title: string;
@@ -20,6 +21,9 @@ function onCount() {
 
 <template>
   <a-card :title="title">
+    <template #extra>
+      <math-counter-help-modal v-if="type === 'math'" />
+    </template>
     <div f-ac-jb>
       <a-textarea v-model="value" allow-clear wp-45i h-100 />
       <a-button type="primary" @click="onCount">=</a-button>
