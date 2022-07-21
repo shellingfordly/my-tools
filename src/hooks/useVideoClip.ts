@@ -71,5 +71,32 @@ export function useVideoClip() {
     return imgList;
   }
 
-  return { ffmpeg, writeFile, readFile, clipImage, getClipImages };
+  async function getClipVideo(config: any) {
+    await ffmpeg.run(
+      "-i",
+      config.fileName,
+      "-r",
+      `${config.frameRate}`,
+      "-ss",
+      `${config.rangeStart}`,
+      "-to",
+      `${config.rangeEnd}`,
+      "-vf",
+      `${config.output}.${config.fileType}`
+    );
+    const buffer = readFile(config.fileName);
+    console.log("buffer", buffer, config);
+
+    if (buffer) return bufferChangeUrl(buffer, config.fileType);
+    return null;
+  }
+
+  return {
+    ffmpeg,
+    writeFile,
+    readFile,
+    clipImage,
+    getClipImages,
+    getClipVideo,
+  };
 }

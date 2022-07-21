@@ -21,7 +21,7 @@ function getFileSuffix(name: string) {
 
 export function bufferChangeUrl(buffer: ArrayBufferLike, _type: FileType) {
   let prefix = "image";
-  if (VideFile[_type as VideoFileType]) {
+  if (VideFile[_type as VideoFileType] !== undefined) {
     // 视频
     prefix = "video/";
   } else if (ImageFile[_type as ImageFileType]) {
@@ -31,6 +31,7 @@ export function bufferChangeUrl(buffer: ArrayBufferLike, _type: FileType) {
     // 音频
     console.log("音频处理");
   }
+  console.log("prefix", prefix, _type);
 
   const url = URL.createObjectURL(
     new Blob([buffer], { type: `${prefix}${_type}` })
