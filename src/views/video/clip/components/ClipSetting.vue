@@ -3,30 +3,33 @@ import type { ClipImageItem, VideoInfoType } from "/@/types";
 
 const emit = defineEmits(["preview", "export"]);
 const props = defineProps<{
-  fileInfo: VideoInfoType;
+  fileInfo: Partial<VideoInfoType>;
   imgs: ClipImageItem[];
 }>();
 const urls = computed(() =>
   props.imgs.sort((a, b) => a.index - b.index).map((item) => item.url)
 );
-const data = computed(() => [
-  {
-    label: "文件名",
-    value: String(props.fileInfo.file.name),
-  },
-  {
-    label: "宽度",
-    value: String(props.fileInfo.width),
-  },
-  {
-    label: "高度",
-    value: String(props.fileInfo.height),
-  },
-  {
-    label: "时长",
-    value: String(props.fileInfo.duration),
-  },
-]);
+const data = computed(() => {
+  const { file, width = "", height = "", duration = "" } = props.fileInfo;
+  return [
+    {
+      label: "文件名",
+      value: String(file?.name || ""),
+    },
+    {
+      label: "宽度",
+      value: String(width),
+    },
+    {
+      label: "高度",
+      value: String(height),
+    },
+    {
+      label: "时长",
+      value: String(duration),
+    },
+  ];
+});
 const config = reactive({
   rangeStart: 0,
   rangeEnd: 0,
