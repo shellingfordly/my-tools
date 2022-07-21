@@ -2,14 +2,14 @@ import { ProgressCallback } from "@ffmpeg/ffmpeg";
 import type { VideoConfigType } from "/@/types";
 
 export function useVideoFormat() {
-  const { ffmpeg, fetchFile } = useFFmpeg();
+  const { ffmpeg, writeFile, readFile } = useFFmpeg();
 
   function setProgress(progressFn: ProgressCallback) {
     ffmpeg.setProgress(progressFn);
   }
 
   async function videoFormat(file: File, config: VideoConfigType) {
-    ffmpeg.FS("writeFile", file.name, await fetchFile(file));
+    writeFile(file);
 
     const {
       frameRate = 25,
@@ -34,7 +34,7 @@ export function useVideoFormat() {
       `output.${fileType}`
     );
 
-    return ffmpeg.FS("readFile", `output.${fileType}`).buffer;
+    return readFile(`output.${fileType}`);
   }
 
   return { setProgress, videoFormat };

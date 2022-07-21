@@ -14,20 +14,7 @@ export interface ClipImageItem {
 }
 
 export function useVideoClip() {
-  const { ffmpeg, fetchFile } = useFFmpeg();
-
-  async function writeFile(file: File) {
-    ffmpeg.FS("writeFile", file.name, await fetchFile(file));
-  }
-
-  function readFile(fileName: string) {
-    try {
-      return ffmpeg.FS("readFile", fileName).buffer;
-    } catch (error) {
-      console.warn("error", error);
-    }
-    return null;
-  }
+  const { ffmpeg, writeFile, readFile } = useFFmpeg();
 
   async function clipImage(fileName: string, time: number) {
     await ffmpeg.run(
@@ -36,7 +23,7 @@ export function useVideoClip() {
       "-i",
       fileName,
       "-s",
-      "960x540",
+      "200x100",
       "-f",
       "image2",
       "-frames",
@@ -51,23 +38,20 @@ export function useVideoClip() {
     for (let i = 0; i < frameNum; i++) {
       await clipImage(file.name, Math.floor(per) * i);
     }
-
     const imgList: ClipImageItem[] = [];
-
     for (let i = 0; i < frameNum; i++) {
       const time = Math.floor(per) * i;
       const fileName = `frame-${time}.jpeg`;
       const buffer = readFile(fileName);
-
-      if (buffer)
+      if (buffer) {
         imgList.push({
           url: bufferChangeUrl(buffer, "jpeg"),
           index: i,
           time,
           fileName,
         });
+      }
     }
-
     return imgList;
   }
 
@@ -82,10 +66,10 @@ export function useVideoClip() {
       "-to",
       `${config.rangeEnd}`,
       "-vf",
+      `scale=${config.width}:${config.height},fade=t=in:st=${config.rangeStart}:d=0.05`,
       `${config.output}.${config.fileType}`
     );
-    const buffer = readFile(config.fileName);
-    console.log("buffer", buffer, config);
+    const buffer = readFile(`${config.output}.${config.fileType}`);
 
     if (buffer) return bufferChangeUrl(buffer, config.fileType);
     return null;
