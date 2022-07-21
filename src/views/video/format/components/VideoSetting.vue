@@ -41,12 +41,12 @@ async function onChange() {
   if (!file) return;
   loading.value = true;
   const buffer = await videoFormat(file, config);
-
   const type =
     config.fileType === "gif" ? "image/gif" : `video/${config.fileType}`;
-  const url = URL.createObjectURL(new Blob([buffer], { type }));
-
-  emit("change", { url, type: config.fileType, size: buffer.byteLength });
+  if (buffer) {
+    const url = URL.createObjectURL(new Blob([buffer], { type }));
+    emit("change", { url, type: config.fileType, size: buffer.byteLength });
+  }
   loading.value = false;
 }
 </script>

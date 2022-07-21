@@ -1,72 +1,109 @@
 <script lang="ts" setup>
+import { PropType } from "vue";
 import { formatNumber } from "/@/lib/utils";
 
+const props = defineProps({
+  imgs: {
+    type: Array as PropType<string[]>,
+    default: [],
+  },
+  duration: {
+    type: Number,
+    default: 0,
+  },
+});
 const emit = defineEmits(["change"]);
-
 const railContainerRef = ref<HTMLDivElement>();
-const isMove = ref(false);
-const x = ref(0);
+const barX = reactive<[number, number]>([0, 0]);
+const index = ref(-1);
 const clientRect = ref<DOMRect>();
-const ContainerBorder = 3;
+const ContainerBorder = 5;
 
-watch(x, (_x) => {
-  const time = formatNumber((_x / clientRect.value?.width!) * 30, 2);
+watch(barX, () => {
+  const time = barX
+    .map((x) => {
+      const _x = x && x + ContainerBorder;
+      const length = unref(clientRect)?.width!;
+      return formatNumber((_x / length) * props.duration, 2);
+    })
+    .sort((a, b) => a - b);
   emit("change", time);
 });
 
 onMounted(() => {
+  document.addEventListener("mouseup", () => {
+    index.value = -1;
+  });
   if (!railContainerRef) return;
   clientRect.value = unref(railContainerRef)?.getBoundingClientRect();
+  barX[1] = clientRect.value?.width! - ContainerBorder;
 });
 
-function setX(_x: number) {
+function setX(x: number) {
   const rect = unref(clientRect)!;
-  if (_x > rect.width + rect.left - ContainerBorder) {
-    x.value = rect.width - 3;
-  } else if (_x < rect.left) {
-    x.value = 0;
+  if (x >= rect.width + rect.left - ContainerBorder) {
+    return rect.width - ContainerBorder;
+  } else if (x <= rect.left) {
+    return 0;
   } else {
-    x.value = _x - (rect.left || 0);
+    return x - (rect.left || 0);
   }
 }
 
 function mousemove(e: MouseEvent) {
-  if (isMove.value) {
-    setX(e.pageX);
+  if (index.value >= 0) {
+    barX[index.value] = setX(e.pageX);
   }
 }
 
-function mousedown(e: MouseEvent) {
-  isMove.value = true;
+function mousedown(i: number) {
+  index.value = i;
 }
 </script>
 
 <template>
   <div
     ref="railContainerRef"
-    :class="$style.railContainer"
+    class="railContainer"
     @mousemove="mousemove"
-    @mouseup="isMove = false"
+    @mouseup="index = -1"
   >
+    <div flex overflow>
+      <img
+        :style="{ width: `${100 / 8}%` }"
+        v-for="url in imgs"
+        :src="url"
+        draggable="false"
+      />
+    </div>
     <div
-      :class="$style.sliderBar"
-      @mousedown="mousedown"
-      :style="{ left: x + 'px' }"
-    ></div>
+      b-l-red
+      v-for="i in [0, 1]"
+      :key="i"
+      class="sliderBar"
+      @mousedown="() => mousedown(i)"
+      :style="{ left: barX[i] + 'px', borderLeftWidth: ContainerBorder + 'px' }"
+    />
   </div>
 </template>
 
-<style module scoped lang="less">
+<style scoped lang="less">
 .railContainer {
+  display: flex;
+  align-items: center;
   position: relative;
   width: 100%;
   height: 100px;
   background-color: #aaa;
 
+  img {
+    user-select: none;
+  }
+
   .sliderBar {
     position: absolute;
-    left: 200px;
-    border-left: 3px solid red;
+    top: 0;
+    left: 0;
     height: 100%;
     cursor: move;
   }
