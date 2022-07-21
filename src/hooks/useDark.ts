@@ -1,9 +1,13 @@
 export function useDark() {
-  const isDark = ref(false);
+  const isDark = ref(true);
 
-  watch(isDark, () => {
-    changeTheme();
-  });
+  watch(
+    isDark,
+    () => {
+      changeTheme();
+    },
+    { immediate: true }
+  );
 
   function changeTheme() {
     if (isDark.value) {

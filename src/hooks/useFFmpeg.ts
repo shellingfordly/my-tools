@@ -6,7 +6,7 @@ import {
 } from "@ffmpeg/ffmpeg";
 import { VideoConfigType } from "/@/types/video";
 
-const getFFmpeg = () => {
+export const getFFmpeg = () => {
   if (!("SharedArrayBuffer" in window)) {
     throw new Error("SharedArrayBuffer could not be used.");
   }
@@ -18,7 +18,7 @@ const getFFmpeg = () => {
 
 let ffmpeg: FFmpeg | null = null;
 
-const loadFFmpeg = async (): Promise<any> => {
+export const loadFFmpeg = async (): Promise<any> => {
   if (ffmpeg == null) {
     const { createFFmpeg } = getFFmpeg();
     ffmpeg = createFFmpeg({ log: true });

@@ -48,7 +48,7 @@ async function onChange() {
   });
 
   const type =
-    config.fileType === "gif" ? "image/gif" : `video${config.fileType}`;
+    config.fileType === "gif" ? "image/gif" : `video/${config.fileType}`;
   const url = URL.createObjectURL(new Blob([buffer], { type }));
 
   emit("change", { url, type: config.fileType, size: buffer.byteLength });
