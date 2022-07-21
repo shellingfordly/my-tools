@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { FileItem } from "@arco-design/web-vue";
 import type { VideoInfoType, ClipImageItem } from "/@/types";
-import type { FFmpeg } from "@ffmpeg/ffmpeg";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
 import ClipSetting from "./components/ClipSetting.vue";
 

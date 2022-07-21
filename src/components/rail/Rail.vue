@@ -1,24 +1,23 @@
 <script lang="ts" setup>
-let containerLeft = 221;
-const railContainerRef = ref();
+const railContainerRef = ref<HTMLDivElement>();
 const isMove = ref(false);
 const x = ref(0);
+const clientRect = ref<DOMRect>();
 
 onMounted(() => {
-  // if (!railContainerRef.value) return;
-  // const offsetLeft = (railContainerRef.value as HTMLDivElement).offsetLeft;
-  // containerLeft = offsetLeft;
-  // console.log("offsetLeft", offsetLeft);
+  if (!railContainerRef) return;
+  clientRect.value = unref(railContainerRef)?.getBoundingClientRect();
 });
 
 function mousemove(e: MouseEvent) {
   if (isMove.value) {
-    x.value = e.pageX - containerLeft;
+    x.value = e.pageX - (clientRect.value?.left || 0);
   }
 }
+
 function mousedown(e: MouseEvent) {
   isMove.value = true;
-  x.value = e.pageX - containerLeft;
+  x.value = e.pageX - (clientRect.value?.left || 0);
 }
 </script>
 

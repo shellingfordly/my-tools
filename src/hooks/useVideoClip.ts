@@ -1,4 +1,3 @@
-import type { FFmpeg } from "@ffmpeg/ffmpeg";
 import { bufferChangeUrl } from "/@/lib/file/handleFile";
 
 interface ClipImageOptions {
@@ -31,7 +30,19 @@ export function useVideoClip() {
   }
 
   async function clipImage(fileName: string, time: number) {
-    await _clipImage(ffmpeg, fileName, time);
+    await ffmpeg.run(
+      "-ss",
+      `${time}`,
+      "-i",
+      fileName,
+      "-s",
+      "960x540",
+      "-f",
+      "image2",
+      "-frames",
+      "1",
+      `frame-${time}.jpeg`
+    );
   }
 
   async function getClipImages(options: ClipImageOptions) {
@@ -61,20 +72,4 @@ export function useVideoClip() {
   }
 
   return { ffmpeg, writeFile, readFile, clipImage, getClipImages };
-}
-
-async function _clipImage(ffmpeg: FFmpeg, fileName: string, time: number) {
-  await ffmpeg.run(
-    "-ss",
-    `${time}`,
-    "-i",
-    fileName,
-    "-s",
-    "960x540",
-    "-f",
-    "image2",
-    "-frames",
-    "1",
-    `frame-${time}.jpeg`
-  );
 }
