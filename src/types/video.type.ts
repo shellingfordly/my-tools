@@ -38,5 +38,5 @@ export interface ClipImageItem {
   index: number;
   url: string;
   time: number;
-  fileName: string;
+  name: string;
 }

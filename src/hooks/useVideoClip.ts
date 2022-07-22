@@ -1,16 +1,10 @@
+import { ClipImageItem } from "../types";
 import { bufferChangeUrl } from "/@/lib/file/handleFile";
 
 interface ClipImageOptions {
-  file: File;
+  filename: string;
   duration: number; // 时长
   frameNum?: number; // 帧数
-}
-
-export interface ClipImageItem {
-  index: number;
-  url: string;
-  time: number;
-  fileName: string;
 }
 
 export function useVideoClip() {
@@ -33,22 +27,22 @@ export function useVideoClip() {
   }
 
   async function getClipImages(options: ClipImageOptions) {
-    const { frameNum = 8, duration, file } = options;
+    const { frameNum = 8, duration, filename } = options;
     const per = duration! / (frameNum - 1);
     for (let i = 0; i < frameNum; i++) {
-      await clipImage(file.name, Math.floor(per) * i);
+      await clipImage(filename, Math.floor(per) * i);
     }
     const imgList: ClipImageItem[] = [];
     for (let i = 0; i < frameNum; i++) {
       const time = Math.floor(per) * i;
-      const fileName = `frame-${time}.jpeg`;
-      const buffer = readFile(fileName);
+      const name = `frame-${time}.jpeg`;
+      const buffer = readFile(name);
       if (buffer) {
         imgList.push({
           url: bufferChangeUrl(buffer, "jpeg"),
           index: i,
           time,
-          fileName,
+          name,
         });
       }
     }

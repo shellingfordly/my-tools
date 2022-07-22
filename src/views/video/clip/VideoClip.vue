@@ -15,7 +15,7 @@ watch(
   async (file) => {
     await writeFile(file);
     thumbnails.value = await getClipImages({
-      file,
+      filename: file.name,
       duration: fileInfo.value.duration,
     });
   },
@@ -24,7 +24,6 @@ watch(
 
 async function onChange(_: FileItem[], _file: FileItem) {
   fileInfo.value = await getVideoInfo(_file);
-  writeFile(fileInfo.value.file);
 }
 </script>
 

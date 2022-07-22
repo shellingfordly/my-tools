@@ -53,9 +53,6 @@ async function onPreview() {
   url = await getClipVideo({
     ...config,
     fileName: file.name,
-    frameRate: 3,
-    width: -1,
-    height: -1,
   });
   emit("preview", url);
 }
