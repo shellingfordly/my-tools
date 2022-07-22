@@ -19,3 +19,5 @@ declare module "relationship.js" {
   const result: string[];
   export default (options: OptionsType) => result;
 }
+
+declare const Comlink;

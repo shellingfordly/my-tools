@@ -15,6 +15,13 @@ const CommonRoute: RouteRecordRaw = {
         name: "计算工具",
       },
     },
+    {
+      path: "/common/demo",
+      component: () => import("/@/views/common/demo/Demo.vue"),
+      meta: {
+        name: "Demo",
+      },
+    },
   ],
 };
 
