@@ -10,7 +10,10 @@ const props = defineProps<{
 
 const FileTypeList = ["gif", "mp4", "avi", "webm", "mpeg", "flv"];
 const loading = ref(false);
-const config = reactive({
+const config = reactive<FFmpegConfig>({
+  type: "video",
+  outputName: "output",
+  filename: "",
   frameRate: 25,
   rangeStart: 0,
   rangeEnd: 10,
@@ -34,7 +37,7 @@ watch(
 
 ffmpeg.setProgress(({ time }: any) => {
   const t = time >= 0 ? time : 0;
-  percent.value = formatNumber(t / config.rangeEnd, 2);
+  percent.value = formatNumber(t / config.rangeEnd!, 2);
 });
 
 async function onChange() {
@@ -44,9 +47,8 @@ async function onChange() {
   await writeFile(file);
   const { url, size } = await ffmpegRun({
     ...config,
-    type: "video",
     filename: file.name,
-  } as FFmpegConfig);
+  });
   emit("change", {
     url,
     size,

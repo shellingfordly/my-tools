@@ -2,8 +2,8 @@
 <script lang="ts" setup>
 import { selectFile } from "/@/lib/file/selectFile";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
-import VideoSetting from "./components/VideoSetting.vue";
-import VideoCard from "./components/VideoCard.vue";
+import FormatSetting from "./components/FormatSetting.vue";
+import FormatCard from "./components/FormatCard.vue";
 import { ExportFileType, VideoInfoType } from "/@/types";
 
 const fileList = reactive<VideoInfoType[]>([]);
@@ -32,7 +32,7 @@ function onChange(f: any) {
   </div>
   <div flex b-1>
     <div wp-50 p-20 b-r-1>
-      <VideoSetting :fileInfo="file" @change="onChange" />
+      <FormatSetting :fileInfo="file" @change="onChange" />
       <div
         :class="['video-box', file.id === f.id && 'selected']"
         v-for="f in fileList"
@@ -43,7 +43,7 @@ function onChange(f: any) {
       </div>
     </div>
     <div wp-50 p-20 class="right">
-      <video-card :file="item" v-for="item in resList" />
+      <FormatCard :file="item" v-for="item in resList" />
     </div>
   </div>
 </template>

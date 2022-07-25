@@ -8,9 +8,7 @@ const props = defineProps<{
 const visible = ref(false);
 const size = computed(() => (props.file.size / 1000000).toFixed(2));
 
-const form = reactive({
-  output: "output",
-});
+const output = ref("output");
 </script>
 
 <template>
@@ -22,7 +20,7 @@ const form = reactive({
     <div wp-50 p-10 b-l-1>
       <div fs-20 fw-700 ml-10 mb-10>文件信息</div>
       <a-form
-        :model="form"
+        :model="{}"
         :label-col-props="{ span: 6 }"
         :wrapper-col-props="{ span: 18 }"
       >
@@ -34,7 +32,7 @@ const form = reactive({
           </a-input>
         </a-form-item>
         <a-form-item field="output" label="名字">
-          <a-input v-model="form.output">
+          <a-input v-model="output">
             <template #suffix>
               <span>.{{ file.type }}</span>
             </template>
@@ -56,7 +54,7 @@ const form = reactive({
           size="small"
           type="primary"
           :href="file.url"
-          :download="`${form.output}.${file.type}`"
+          :download="`${output}.${file.type}`"
         >
           下载
         </a-button>
