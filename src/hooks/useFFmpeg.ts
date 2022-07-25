@@ -10,16 +10,11 @@ import { bufferChangeUrl } from "../lib/file/handleFile";
 
 let ffmpeg: FFmpeg | null = null;
 
-function checkStation() {
+export function useFFmpeg() {
   if (!("SharedArrayBuffer" in window)) {
     Message.error("浏览器不支持 SharedArrayBuffer， 无法使用视频功能！");
-    return false;
   }
-  return true;
-}
 
-export function useFFmpeg() {
-  if (!checkStation()) return;
   if (!ffmpeg) {
     ffmpeg = createFFmpeg({ log: true });
   }
