@@ -53,7 +53,6 @@ declare global {
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
   const useVideoClip: typeof import('./src/hooks/useVideoClip')['useVideoClip']
-  const useVideoFormat: typeof import('./src/hooks/useVideoFormat')['useVideoFormat']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
