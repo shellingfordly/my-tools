@@ -8,6 +8,7 @@ export const router = createRouter({
     {
       path: "/",
       component: () => import("/@/layout/Layout.vue"),
+      redirect: "/common",
       children: routes,
     },
   ],

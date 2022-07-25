@@ -19,6 +19,7 @@ open http://localhost:3080/
 1. [数学表达式计算器](https://shellingfordly.github.io/my-tools/#/common/counter)
 
 - 支持阿拉伯数字和汉字数字
+- 基于[nzh](https://github.com/cnwhy/nzh)实现中文数字转换
 
 <img src="./docs/imgs/counter.gif" style="width: 500px" />
 
@@ -44,12 +45,10 @@ open http://localhost:3080/
 
 <img src="./docs/imgs/video_clip.gif" style="width: 500px" />
 
-## Preparation
+## Dependence
 
 - [vue](https://vuejs.org/)
 - [ffmpeg](https://github.com/ffmpegwasm/ffmpeg.wasm)
 - [unocss](https://github.com/unocss/unocss)
-
-## Reference
-
-- [video-to-gif](https://github.com/mryhryki/video-to-gif)
+- [nzh](https://github.com/cnwhy/nzh)
+- [relationship](https://github.com/mumuy/relationship)
