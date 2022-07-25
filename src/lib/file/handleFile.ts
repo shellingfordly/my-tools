@@ -19,19 +19,22 @@ function getFileSuffix(name: string) {
   return name.substring(name.lastIndexOf("."));
 }
 
-export function bufferChangeUrl(buffer: ArrayBufferLike, _type: FileType) {
+export function bufferChangeUrl(
+  buffer: ArrayBufferLike | null,
+  _type: FileType
+) {
+  if (!buffer) return "";
   let prefix = "image";
   if (VideFile[_type as VideoFileType] !== undefined) {
     // 视频
     prefix = "video/";
-  } else if (ImageFile[_type as ImageFileType]) {
+  } else if (ImageFile[_type as ImageFileType] !== undefined) {
     // 图片
     prefix = "image/";
   } else {
     // 音频
     console.log("音频处理");
   }
-  console.log("prefix", prefix, _type);
 
   const url = URL.createObjectURL(
     new Blob([buffer], { type: `${prefix}${_type}` })

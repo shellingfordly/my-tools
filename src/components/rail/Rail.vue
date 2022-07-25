@@ -68,7 +68,7 @@ function mousedown(i: number) {
     @mousemove="mousemove"
     @mouseup="index = -1"
   >
-    <div flex overflow>
+    <div flex overflow-x-auto>
       <img
         :style="{ width: `${100 / 8}%` }"
         v-for="url in imgs"

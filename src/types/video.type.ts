@@ -9,13 +9,16 @@ export interface ExportFileType {
   size: number;
 }
 
-export interface VideoConfigType {
+export interface FFmpegConfig {
+  type: "image" | "video";
+  filename: string;
   frameRate?: number;
-  width: number;
-  height: number;
   rangeStart?: number;
-  rangeEnd: number;
-  fileType: "gif" | VideoFileType;
+  rangeEnd?: number;
+  width?: number;
+  height?: number;
+  fileType: FileType;
+  outputName: string;
 }
 
 export interface VideoInfoType {

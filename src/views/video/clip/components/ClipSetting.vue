@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import type { ClipImageItem, VideoInfoType } from "/@/types";
+import type { ClipImageItem, FFmpegConfig, VideoInfoType } from "/@/types";
 
 const emit = defineEmits(["preview", "export"]);
 const props = defineProps<{
   fileInfo: Partial<VideoInfoType>;
   imgs: ClipImageItem[];
 }>();
+
 const urls = computed(() =>
   props.imgs.sort((a, b) => a.index - b.index).map((item) => item.url)
 );
-const data = computed(() => {
+const info = computed(() => {
   const { file, width = "", height = "", duration = "" } = props.fileInfo;
   return [
     {
@@ -30,16 +31,20 @@ const data = computed(() => {
     },
   ];
 });
+
 const config = reactive({
   rangeStart: 0,
   rangeEnd: 0,
-  output: "output",
+  outputName: "output",
   fileType: "mp4",
   width: -1,
   height: -1,
   frameRate: 25,
 });
+const loading = ref(false);
+
 const { getClipVideo } = useVideoClip();
+
 let url: string | null = null;
 
 function onChangeTime(time: [number, number]) {
@@ -48,12 +53,20 @@ function onChangeTime(time: [number, number]) {
 }
 
 async function onPreview() {
-  const file = props.fileInfo.file;
-  if (!file) return;
-  url = await getClipVideo({
-    ...config,
-    fileName: file.name,
-  });
+  if (!url) {
+    loading.value = true;
+    const file = props.fileInfo.file;
+    if (!file) return;
+    url = (
+      await getClipVideo({
+        ...(config as FFmpegConfig),
+        type: "video",
+        filename: file.name,
+      })
+    ).url;
+
+    loading.value = false;
+  }
   emit("preview", url);
 }
 
@@ -61,7 +74,7 @@ function onExport() {
   if (!url) return;
   const a = document.createElement("a");
   a.href = url;
-  a.download = "output.mp4";
+  a.download = config.outputName + config.fileType;
   a.click();
 }
 </script>
@@ -72,7 +85,7 @@ function onExport() {
   </div>
   <div flex b-1 p-20>
     <div w-400 b-r-1>
-      <a-descriptions :data="data" title="文件信息" size="small" :column="1" />
+      <a-descriptions :data="info" title="文件信息" size="small" :column="1" />
     </div>
     <div p-20>
       <ul f-jb>
@@ -109,7 +122,7 @@ function onExport() {
         <li wp-25>
           <div f-ac mb-20>
             <span w-110>导出名</span>
-            <a-input v-model="config.output" />
+            <a-input v-model="config.outputName" />
           </div>
           <div f-ac mb-20>
             <span w-110>导出格式</span>
@@ -118,8 +131,8 @@ function onExport() {
         </li>
       </ul>
       <div f-jc>
-        <a-button @click="onPreview" mr-20> 预览 </a-button>
-        <a-button @click="onExport"> 导出 </a-button>
+        <a-button :loading="loading" @click="onPreview" mr-20> 预览 </a-button>
+        <a-button :disabled="loading" @click="onExport"> 导出 </a-button>
       </div>
     </div>
   </div>

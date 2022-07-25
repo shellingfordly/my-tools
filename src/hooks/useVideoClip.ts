@@ -1,72 +1,44 @@
-import { ClipImageItem } from "../types";
-import { bufferChangeUrl } from "/@/lib/file/handleFile";
+import { bufferChangeUrl } from "../lib/file/handleFile";
+import { ClipImageItem, FFmpegConfig } from "../types";
 
 interface ClipImageOptions {
   filename: string;
   duration: number; // 时长
   frameNum?: number; // 帧数
+  imgs: ClipImageItem[];
 }
 
 export function useVideoClip() {
-  const { ffmpeg, writeFile, readFile } = useFFmpeg();
+  const { ffmpeg, writeFile, readFile, ffmpegRun } = useFFmpeg();
 
-  async function clipImage(fileName: string, time: number) {
-    await ffmpeg.run(
-      "-ss",
-      `${time}`,
-      "-i",
-      fileName,
-      "-s",
-      "200x100",
-      "-f",
-      "image2",
-      "-frames",
-      "1",
-      `frame-${time}.jpeg`
-    );
+  async function clipImage(filename: string, time: number) {
+    return await ffmpegRun({
+      type: "image",
+      filename,
+      rangeStart: time,
+      width: 200,
+      height: 100,
+      outputName: `frame-${time}`,
+      fileType: "jpeg",
+    });
   }
 
   async function getClipImages(options: ClipImageOptions) {
-    const { frameNum = 8, duration, filename } = options;
-    const per = duration! / (frameNum - 1);
-    for (let i = 0; i < frameNum; i++) {
-      await clipImage(filename, Math.floor(per) * i);
-    }
-    const imgList: ClipImageItem[] = [];
-    for (let i = 0; i < frameNum; i++) {
-      const time = Math.floor(per) * i;
+    const { frameNum = 8, duration, filename, imgs } = options;
+    const per = duration! / frameNum;
+
+    (async function push(index: number) {
+      const time = Math.floor(per) * index;
       const name = `frame-${time}.jpeg`;
-      const buffer = readFile(name);
-      if (buffer) {
-        imgList.push({
-          url: bufferChangeUrl(buffer, "jpeg"),
-          index: i,
-          time,
-          name,
-        });
-      }
-    }
-    return imgList;
+      const { url } = await clipImage(filename, time);
+      const img = { url, index, time, name };
+      imgs.push(img);
+      if (index <= frameNum) push(++index);
+    })(0);
   }
 
-  async function getClipVideo(config: any) {
-    await ffmpeg.run(
-      "-i",
-      config.fileName,
-      "-r",
-      `${config.frameRate}`,
-      "-ss",
-      `${config.rangeStart}`,
-      "-to",
-      `${config.rangeEnd}`,
-      "-vf",
-      `scale=${config.width}:${config.height},fade=t=in:st=${config.rangeStart}:d=0.05`,
-      `${config.output}.${config.fileType}`
-    );
-    const buffer = readFile(`${config.output}.${config.fileType}`);
-
-    if (buffer) return bufferChangeUrl(buffer, config.fileType);
-    return null;
+  async function getClipVideo(config: FFmpegConfig) {
+    return await ffmpegRun(config);
   }
 
   return {
