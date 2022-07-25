@@ -13,12 +13,13 @@ let ffmpeg: FFmpeg | null = null;
 function checkStation() {
   if (!("SharedArrayBuffer" in window)) {
     Message.error("浏览器不支持 SharedArrayBuffer， 无法使用视频功能！");
-    throw new Error("SharedArrayBuffer could not be used.");
+    return false;
   }
+  return true;
 }
 
 export function useFFmpeg() {
-  checkStation();
+  if (!checkStation()) return;
   if (!ffmpeg) {
     ffmpeg = createFFmpeg({ log: true });
   }
