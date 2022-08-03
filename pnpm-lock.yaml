@@ -6,6 +6,7 @@ specifiers:
   '@ffmpeg/ffmpeg': ^0.10.1
   '@types/node': ^18.0.3
   '@types/prettier': ^2.6.3
+  '@types/qrcodejs': ^1.0.0
   '@unocss/preset-attributify': ^0.44.3
   '@unocss/preset-rem-to-px': ^0.44.3
   '@unocss/preset-uno': ^0.44.3
@@ -17,6 +18,7 @@ specifiers:
   less: ^4.1.3
   nzh: ^1.0.8
   prettier: ^2.7.1
+  qrcodejs: ^1.0.0
   relationship.js: ^1.1.0
   typescript: ^4.5.4
   unocss: ^0.44.3
@@ -30,6 +32,7 @@ specifiers:
 
 dependencies:
   nzh: 1.0.8
+  qrcodejs: 1.0.0
   relationship.js: 1.1.0
   vue: 3.2.37
   vue-router: 4.1.2_vue@3.2.37
@@ -40,6 +43,7 @@ devDependencies:
   '@ffmpeg/ffmpeg': 0.10.1
   '@types/node': 18.0.3
   '@types/prettier': 2.6.3
+  '@types/qrcodejs': 1.0.0
   '@unocss/preset-attributify': 0.44.3
   '@unocss/preset-rem-to-px': 0.44.3
   '@unocss/preset-uno': 0.44.3
@@ -220,6 +224,10 @@ packages:
 
   /@types/prettier/2.6.3:
     resolution: {integrity: sha512-ymZk3LEC/fsut+/Q5qejp6R9O1rMxz3XaRHDV6kX8MrGAhOSPqVARbDi+EZvInBpw+BnCX3TD240byVkOfQsHg==}
+    dev: true
+
+  /@types/qrcodejs/1.0.0:
+    resolution: {integrity: sha512-WgRYP8kq46MXysthA87TR51TipJveKdn9ULiJzmlMCmIvRw0BDfu2am+a+ju1p5eJmB+jdjjKBibR4AoyrX23Q==}
     dev: true
 
   /@unocss/cli/0.44.3:
@@ -1716,6 +1724,10 @@ packages:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
     dev: true
     optional: true
+
+  /qrcodejs/1.0.0:
+    resolution: {integrity: sha512-67rj3mMBhSBepaD57qENnltO+r8rSYlqM7HGThks/BiyDAkc86sLvkKqjkqPS5v13f7tvnt6dbEf3qt7zq+BCg==}
+    dev: false
 
   /qs/6.10.3:
     resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}

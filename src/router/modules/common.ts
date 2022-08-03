@@ -22,6 +22,13 @@ const CommonRoute: RouteRecordRaw = {
         name: "Demo",
       },
     },
+    {
+      path: "/common/qrcode",
+      component: () => import("/@/views/common/qrcode/QRcode.vue"),
+      meta: {
+        name: "二维码",
+      },
+    },
   ],
 };
 
