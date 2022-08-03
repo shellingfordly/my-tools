@@ -29,6 +29,12 @@ open http://localhost:3080/
 
 <img src="./docs/imgs/relationship.gif" style="width: 500px" />
 
+3. [二维码生成](https://shellingfordly.github.io/my-tools/#/common/qrcode)
+
+基于[qrcodejs](https://github.com/davidshimjs/qrcodejs)生成
+
+<img src="./docs/imgs/qrcode.gif" style="width: 500px" />
+
 ### 视频处理
 
 > 目前 github pages 版本无法使用视频处理模块功能
