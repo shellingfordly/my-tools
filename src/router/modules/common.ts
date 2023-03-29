@@ -2,7 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 
 const CommonRoute: RouteRecordRaw = {
   path: "/common",
-  component: () => import("/@/layout/pages/MenuPage.vue"),
+  component: () => import("/@/layout/Content.vue"),
   redirect: "/common/counter",
   meta: {
     name: "常用工具",

@@ -23,7 +23,6 @@ function onClick(path: string) {
 
 <template>
   <a-layout-header class="header">
-    <div style="width: 300px"></div>
     <a-menu
       class="menu"
       :selectedKeys="[selectedKey]"
@@ -45,6 +44,12 @@ function onClick(path: string) {
 </template>
 
 <style scoped lang="less">
+.logo {
+  height: 32px;
+  margin: 12px 8px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
