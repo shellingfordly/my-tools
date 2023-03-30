@@ -13,6 +13,7 @@ export function getVideoInfo(_file: File | FileItem): Promise<VideoInfoType> {
 
       video.onloadedmetadata = function () {
         URL.revokeObjectURL(url);
+        
         resolve({
           file,
           url,

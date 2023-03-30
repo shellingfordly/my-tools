@@ -1,10 +1,12 @@
 import { handleFile } from "./handleFile";
 
-export function selectFile(): Promise<File> {
+type FileType = "video" | "image";
+
+export function selectFile(type: FileType): Promise<File> {
   return new Promise((resolve, reject) => {
     const input: HTMLInputElement = document.createElement("input");
     input.type = "file";
-    input.accept = "video/*";
+    input.accept = type + "/*";
     input.multiple = false;
     input.onchange = () => {
       if (input.files != null && input.files.length > 0) {

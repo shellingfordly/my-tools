@@ -11,7 +11,7 @@ const file = ref<VideoInfoType>({} as any);
 const resList = reactive<ExportFileType[]>([]);
 
 async function onClick() {
-  const _file = await selectFile();
+  const _file = await selectFile("video");
   const fileInfo = await getVideoInfo(_file);
   onSelected(fileInfo);
   fileList.push(fileInfo);
