@@ -1,0 +1,1 @@
+import{h as u}from"./handleFile.719ba7a4.js";function s(l){return new Promise((t,n)=>{const e=document.createElement("input");e.type="file",e.accept=l+"/*",e.multiple=!1,e.onchange=()=>{if(e.files!=null&&e.files.length>0){const i=e.files.item(0);i&&t(u(i))}n("\u6587\u4EF6\u4E0A\u4F20\u5931\u8D25\uFF01")},e.click()})}export{s};
