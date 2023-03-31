@@ -4,10 +4,10 @@ import { selectFile } from "/@/lib/file/selectFile";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
 import FormatSetting from "./components/FormatSetting.vue";
 import FormatCard from "./components/FormatCard.vue";
-import { ExportFileType, VideoInfoType } from "/@/types";
+import { ExportFileType, FileInfoType } from "/@/types";
 
-const fileList = reactive<VideoInfoType[]>([]);
-const file = ref<VideoInfoType>({} as any);
+const fileList = reactive<FileInfoType[]>([]);
+const file = ref<FileInfoType>({} as any);
 const resList = reactive<ExportFileType[]>([]);
 
 async function onClick() {
@@ -17,7 +17,7 @@ async function onClick() {
   fileList.push(fileInfo);
 }
 
-function onSelected(f: VideoInfoType) {
+function onSelected(f: FileInfoType) {
   file.value = f;
 }
 

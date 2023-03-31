@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { ClipImageItem, FFmpegConfig, VideoInfoType } from "/@/types";
+import type { ClipImageItem, FFmpegConfig, FileInfoType } from "/@/types";
 
 const emit = defineEmits(["preview", "export"]);
 const props = defineProps<{
-  fileInfo: Partial<VideoInfoType>;
+  fileInfo: Partial<FileInfoType>;
   imgs: ClipImageItem[];
 }>();
 

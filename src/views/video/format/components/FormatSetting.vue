@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { bufferChangeUrl } from "/@/lib/file/handleFile";
 import { formatNumber } from "/@/lib/utils";
-import type { FFmpegConfig, FileType, VideoInfoType } from "/@/types";
+import type { FFmpegConfig, FileType, FileInfoType } from "/@/types";
 
 const emit = defineEmits(["change"]);
 const props = defineProps<{
-  fileInfo?: VideoInfoType;
+  fileInfo?: FileInfoType;
 }>();
 
 const FileTypeList = ["gif", "mp4", "avi", "webm", "mpeg", "flv"];

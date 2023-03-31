@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { FileItem } from "@arco-design/web-vue";
-import type { VideoInfoType, ClipImageItem } from "/@/types";
+import type { FileInfoType, ClipImageItem } from "/@/types";
 import { getVideoInfo } from "/@/lib/video/getVideoInfo";
 import ClipSetting from "./components/ClipSetting.vue";
 
-const fileInfo = ref<VideoInfoType>({} as any);
+const fileInfo = ref<FileInfoType>({} as any);
 const thumbnails = ref<ClipImageItem[]>([]);
 const clipFileUrl = ref("");
 const visible = ref(false);

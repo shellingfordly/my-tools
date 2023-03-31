@@ -21,14 +21,14 @@ export interface FFmpegConfig {
   outputName: string;
 }
 
-export interface VideoInfoType {
+export interface FileInfoType {
   file: File;
   el: Element;
   id: string;
   url: string;
   width: number;
   height: number;
-  duration: number;
+  duration?: number;
 }
 
 export interface ClipImageOptions {
