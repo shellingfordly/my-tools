@@ -28,7 +28,7 @@ export default defineConfig({
     vue(),
     Unocss(),
     AutoImport({
-      imports: ["vue", "vue-router"],
+      imports: ["vue", "vue-router", '@vueuse/core'],
       dirs: ["./src/hooks"],
     }),
     AutoComponents({

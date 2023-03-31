@@ -25,6 +25,7 @@ declare module '@vue/runtime-core' {
     AProgress: typeof import('@arco-design/web-vue')['Progress']
     ARow: typeof import('@arco-design/web-vue')['Row']
     ASelect: typeof import('@arco-design/web-vue')['Select']
+    ASpace: typeof import('@arco-design/web-vue')['Space']
     ATabPane: typeof import('@arco-design/web-vue')['TabPane']
     ATabs: typeof import('@arco-design/web-vue')['Tabs']
     ATextarea: typeof import('@arco-design/web-vue')['Textarea']
