@@ -1,0 +1,1 @@
+import{b as s}from"./index.cdfcc5d8.js";import{r,t as n,y as c,c as v}from"./index.4b01108f.js";function f(u){const a=r(u);return[a,t=>{a.value=t}]}function d(u,a){const{value:e}=n(a),[t,l]=f(s(e.value)?u:e.value);return c(e,o=>{s(o)&&l(void 0)}),[v(()=>s(e.value)?t.value:e.value),l,t]}export{d as u};
