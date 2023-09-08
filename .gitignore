@@ -26,3 +26,6 @@ dist-ssr
 # auto import 
 ./auto-imports.d.ts
 ./components.d.ts
+
+.env
+.env.*

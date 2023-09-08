@@ -9,11 +9,19 @@ import Unocss from "unocss/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   // base: "/my-tools/",
+
   server: {
     port: 3080,
     headers: {
       "Cross-Origin-Opener-Policy": "same-origin",
       "Cross-Origin-Embedder-Policy": "require-corp",
+    },
+    proxy: {
+      "/tinify": {
+        target: "https://api.tinify.com/", // 要代理到的目标服务器
+        changeOrigin: true, // 设置为 true 可以解决跨域问题
+        rewrite: (path) => path.replace(/^\/tinify/, ""),
+      },
     },
   },
   resolve: {
@@ -28,7 +36,7 @@ export default defineConfig({
     vue(),
     Unocss(),
     AutoImport({
-      imports: ["vue", "vue-router", '@vueuse/core'],
+      imports: ["vue", "vue-router", "@vueuse/core"],
       dirs: ["./src/hooks"],
     }),
     AutoComponents({

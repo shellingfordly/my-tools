@@ -15,6 +15,13 @@ const ImgRoute: RouteRecordRaw = {
         name: "图片裁剪",
       },
     },
+    {
+      path: "/img/format",
+      component: () => import("/@/views/image/format/ImgFormat.vue"),
+      meta: {
+        name: "图片压缩",
+      },
+    },
   ],
 };
 

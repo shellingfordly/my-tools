@@ -16,7 +16,7 @@ async function handleThumbnails() {
   await writeFile(file);
   getClipImages({
     filename: file.name,
-    duration,
+    duration: duration!,
     imgs: thumbnails.value,
   });
 }

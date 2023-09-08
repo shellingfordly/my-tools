@@ -1,4 +1,3 @@
-import { bufferChangeUrl } from "../lib/file/handleFile";
 import { ClipImageItem, FFmpegConfig } from "../types";
 
 interface ClipImageOptions {
