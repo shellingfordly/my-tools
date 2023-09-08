@@ -16,8 +16,8 @@ const ImgRoute: RouteRecordRaw = {
       },
     },
     {
-      path: "/img/format",
-      component: () => import("/@/views/image/format/ImgFormat.vue"),
+      path: "/img/zip",
+      component: () => import("/@/views/image/zip/ImgZip.vue"),
       meta: {
         name: "图片压缩",
       },
