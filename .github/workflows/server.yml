@@ -1,4 +1,4 @@
-name: server build
+name: note build
 # 触发workflow的条件
 on:
   push:
@@ -16,18 +16,14 @@ jobs:
   deploy: # 任务的job_id，具体名称自定义，这里build代表打包
     runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
     steps:
-      # 切换分支
-      # - name: Checkout
-      #   uses: actions/checkout@main
-
       # git submodule
       - uses: actions/checkout@v2
 
       # node
-      - name: use Node.js 18
+      - name: use Node.js 16
         uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: 16
 
       # npm install
       - name: npm install and build
@@ -40,9 +36,13 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.ACCESS_TOKEN }}" | base64 --decode > ~/.ssh/id_rsa
+          echo "${{ secrets.ACCESS_TOKEN }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+        shell: bash
+
+      - name: Create target directory
+        run: ssh ${{ secrets.USER_NAME }}@${{ secrets.SERVER_HOST }} "mkdir -p ${{ secrets.TARGET_MYTOOLS }}"
         shell: bash
 
       - name: deploy to server
