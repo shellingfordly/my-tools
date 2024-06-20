@@ -1,8 +1,8 @@
-name: note build
+name: server build
 # 触发workflow的条件
 on:
   push:
-    # 只有master分支发生push事件时，才会触发workflow
+    # 只有main分支发生push事件时，才会触发workflow
     branches:
       - main
     paths-ignore: # 下列文件的变更不触发部署，可以自行添加
@@ -24,10 +24,10 @@ jobs:
       - uses: actions/checkout@v2
 
       # node
-      - name: use Node.js 16
+      - name: use Node.js 18
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
 
       # npm install
       - name: npm install and build
@@ -37,13 +37,18 @@ jobs:
         env:
           CI: true
 
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ACCESS_TOKEN }}" | base64 --decode > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+        shell: bash
+
       - name: deploy to server
         uses: AEnterprise/rsync-deploy@v1.0.2
-        env:
-          DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}
-          ARGS: "-e -c -r --delete"
-          SERVER_PORT: "22"
-          FOLDER: "./dist"
-          SERVER_IP: ${{ secrets.SERVER_HOST }}
-          USERNAME: ${{ secrets.USER_NAME }}
-          SERVER_DESTINATION: ${{ secrets.TARGET_MYTOOLS }}
+        with:
+          switches: -avzr --delete
+          path: ./dist/
+          remote_path: ${{ secrets.USER_NAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.TARGET_MYTOOLS }}
+          remote_key: ~/.ssh/id_rsa
