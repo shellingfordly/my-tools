@@ -7,7 +7,7 @@ import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import Unocss from "unocss/vite";
 
 export default defineConfig({
-  // base: "/my-tools/",
+  base: "/my-tools/",
   server: {
     port: 3080,
     headers: {
