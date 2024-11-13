@@ -1,4 +1,4 @@
-name: server build
+name: Deploy to server
 # 触发workflow的条件
 on:
   push:
@@ -14,6 +14,7 @@ on:
 # jobs表示执行的一项或多项任务
 jobs:
   deploy: # 任务的job_id，具体名称自定义，这里build代表打包
+    if: false
     runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
     steps:
       # 切换分支
