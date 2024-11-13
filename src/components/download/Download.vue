@@ -17,5 +17,3 @@ const fileName = computed(() => `${props.name || Date()}.${props.fileType}`);
     {{ text }}
   </a-button>
 </template>
-
-<style scoped lang="less"></style>

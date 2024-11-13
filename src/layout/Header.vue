@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { routes } from "/@/router/modules";
-import FontFamily from "../components/font-family/FontFamily.vue";
 import { IconMoonFill, IconSunFill } from "@arco-design/web-vue/es/icon";
 
 const menus = computed(() => {
@@ -14,7 +13,7 @@ const router = useRouter();
 const selectedKey = computed(() => {
   return routes.find((m) => route.path.includes(m.path))?.path || "";
 });
-const { isDark } = useDark();
+const { isDark } = useTheme();
 
 function onClick(path: string) {
   router.push(path);
@@ -38,7 +37,6 @@ function onClick(path: string) {
         <icon-sun-fill v-if="isDark" />
         <icon-moon-fill v-else />
       </a-button>
-      <FontFamily />
     </div>
   </a-layout-header>
 </template>

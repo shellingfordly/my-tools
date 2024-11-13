@@ -6,10 +6,8 @@ import AutoComponents from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import Unocss from "unocss/vite";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   // base: "/my-tools/",
-
   server: {
     port: 3080,
     headers: {

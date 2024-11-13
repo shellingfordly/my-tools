@@ -31,5 +31,3 @@ function onChange(value: any) {
     </a-option>
   </a-select>
 </template>
-
-<style scoped lang="less"></style>

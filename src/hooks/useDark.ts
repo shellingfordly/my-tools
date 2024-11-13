@@ -1,4 +1,4 @@
-export function useDark() {
+export function useTheme() {
   const isDark = ref(true);
 
   watch(
